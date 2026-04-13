@@ -3,7 +3,7 @@
 Responsive Food Delivery UI built using HTML, CSS, and JavaScript.
 
 ## 🌐 Live Demo
-👉 [View Project](PASTE_YOUR_LINK_HERE)
+👉 (https://mshayatdev.github.io/food-delivery-project/)
 
 ## 🚀 Features
 - Responsive Design
