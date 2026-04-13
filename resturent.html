@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Resturent page</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .topbar {
+      background: #f8f9fa;
+      padding: 8px 20px;
+      font-size: 14px;
+    }
+
+    .promo {
+      color: #ff8800;
+      font-weight: 600;
+    }
+
+    .location {
+      cursor: pointer;
+      color: #ff8800;
+      margin-left: 10px;
+    }
+
+    .cart-box {
+      background: #0d6efd;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* NAVBAR */
+    .navbar-custom {
+      padding: 15px 20px;
+    }
+
+    .brand {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .brand span {
+      color: #ff8800;
+    }
+
+    .nav-link.active {
+      background: #ff8800;
+      color: white !important;
+      border-radius: 20px;
+      padding: 6px 15px;
+    }
+
+    .login-btn {
+      background: #0b1320;
+      color: white;
+      border-radius: 20px;
+      padding: 8px 20px;
+    }
+
+    .hero-banner {
+      background: #03081F;
+      position: relative;
+      overflow: visible;
+      padding: 40px;
+      min-height: 480px;
+
+      display: flex;
+      /* 🔥 main fix */
+      align-items: center;
+      /* 🔥 bottom alignment */
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('images/Rectangle 44.png') no-repeat center/cover;
+      opacity: 0.08;
+    }
+
+    /* LEFT CONTENT */
+    .hero-content {
+      max-width: 50%;
+      z-index: 2;
+    }
+
+    .hero-tagline {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      color: #fff;
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .hero-badge {
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      color: #d0d5ee;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* IMAGE */
+    .hero-img {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      /* 🔥 vertical center */
+      width: 520px;
+      z-index: 1;
+    }
+
+    /* RATING BOX */
+    .hero-rating-box {
+      position: absolute;
+      right: 520px;
+      bottom: 70px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 16px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+      z-index: 3;
+    }
+
+    .hero-rating-num {
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .hero-stars {
+      color: #f5a623;
+    }
+
+    .hero-rating-cnt {
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* OPEN BADGE */
+    .open-badge {
+      position: absolute;
+      left: 0px;
+      bottom: -20px;
+      background: #f5a623;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 0 10px 10px 0;
+      font-weight: 700;
+      z-index: 3;
+    }
+
+    /* search bar section  */
+
+    .offers-bar {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 16px 24px;
+    }
+
+    .offers-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 260px;
+    }
+
+    .search-wrapper .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      border: 1.5px solid #ddd;
+      border-radius: 30px;
+      padding: 9px 16px 9px 40px;
+      font-size: 14px;
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+
+    .search-input::placeholder {
+      color: #aaa;
+    }
+
+    .search-input:focus {
+      border-color: #1a1a1a;
+    }
+
+    /* Clear button */
+    .clear-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .clear-btn.visible {
+      display: block;
+    }
+
+    @media (max-width: 576px) {
+      .offers-bar {
+        flex-direction: column;
+        gap: 12px !important;
+        align-items: flex-start !important;
+      }
+
+      .search-wrapper {
+        width: 100%;
+      }
+    }
+
+    /* <...............menu bar styling...............> */
+
+    /* ══ STICKY NAVBAR ══ */
+    .menu-navbar {
+      background: #FC8A06;
+      border-bottom: 2px solid #f0f0f0;
+      /* position: sticky; */
+      top: 0;
+      z-index: 999;
+      padding: 8px 20px;
+    }
+
+    .menu-navbar .nav-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 4px;
+      scrollbar-width: none;
+      padding: 0;
+    }
+
+    .menu-navbar .nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill {
+      flex-shrink: 0;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .nav-pill:hover {
+      color: #f5a623;
+    }
+
+    .nav-pill.active {
+      color: white;
+      background: black;
+      border-radius: 16px;
+    }
+
+    /* Offers pill - orange background */
+    .nav-pill.offers-pill {
+      /* background: #f5a623; */
+      color: #fff;
+      border-radius: 16px;
+      margin: 8px 4px;
+      padding: 6px 16px;
+      border-bottom: none;
+    }
+
+    .nav-pill.offers-pill:hover {
+      background: #e09400;
+      color: #fff;
+    }
+
+    .nav-pill.offers-pill.active {
+      background: black;
+      color: #fff;
+      border-bottom: none;
+    }
+
+    /* ══ OFFER BANNERS ══ */
+    .offer-banner {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 300px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .offer-banner:hover {
+      transform: scale(1.02);
+    }
+
+    .offer-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .offer-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      padding: 12px;
+      gap: 2px;
+    }
+
+    .offer-top-text {
+      color: #FC8A06;
+      font-size: 15px;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    .offer-label {
+      color: #fff;
+      font-weight: 900;
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+    .offer-new-badge {
+      position: absolute;
+      top: 0px;
+      right: 10px;
+      background: #1a1a2e;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 15px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .section-heading {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin: 28px 0 16px;
+    }
+
+    /* ══ MENU CARD — horizontal layout ══ */
+    .menu-card {
+      background: #fff;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 16px;
+      display: flex;
+      align-items: stretch;
+      overflow: visible;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+      height: 100%;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Left: text */
+    .menu-card-body {
+      flex: 1;
+      padding: 20px 14px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .menu-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: black;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .menu-card-desc {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 12px;
+    }
+
+    .menu-card-price {
+      font-size: 15px;
+      font-weight: 900;
+      color: #1a1a1a;
+    }
+
+    /* Right: image */
+    .menu-card-img-wrap {
+      position: relative;
+      width: 150px;
+      min-width: 150px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .globe {
+      position: absolute;
+      bottom: 0px;
+      /* adjust karo */
+      right: 0px;
+      /* ya left use kr lo */
+      z-index: 2;
+    }
+
+    .globe img {
+      width: 70px;
+      /* size control */
+      height: auto;
+    }
+
+    .menu-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      padding: 10px;
+      border-radius: 18px;
+      z-index: 1;
+    }
+
+    .add-btn {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      background: #1a1f3a;
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      line-height: 1;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+      z-index: 3;
+    }
+
+    .add-btn:hover {
+      background: #f5a623;
+      transform: scale(1.1);
+    }
+
+    .add-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ══ SECTION DIVIDER ══ */
+    .section-divider {
+      border: none;
+      border-top: 2px solid #f0f0f0;
+      margin: 8px 0 0;
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 576px) {
+      .offer-banner {
+        height: 110px;
+      }
+
+      .section-heading {
+        font-size: 1.1rem;
+      }
+
+      .menu-card-img-wrap {
+        width: 120px;
+        min-width: 120px;
+      }
+
+      .menu-card-title {
+        font-size: 13px;
+      }
+    }
+
+    /* <.............info-section..............> */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 32px 0;
+    }
+
+    .info-section {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      min-height: 340px;
+    }
+
+    /* ── LEFT & MIDDLE panels ── */
+    .info-panel {
+      flex: 1;
+      padding: 36px 32px;
+      border-right: 1px solid #ebebeb;
+    }
+
+    .info-panel:last-child {
+      border-right: none;
+    }
+
+    /* ── RIGHT dark panel ── */
+    .info-panel.dark {
+      background: #1a1f3a;
+      color: #fff;
+      flex: 1;
+      padding: 36px 32px;
+      border-right: none;
+    }
+
+    /* ── Panel heading ── */
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+    }
+
+    .info-panel.dark .panel-heading {
+      color: #fff;
+    }
+
+    .panel-heading svg {
+      flex-shrink: 0;
+    }
+
+    /* ── Schedule rows ── */
+    .schedule-row {
+      font-size: 13.5px;
+      color: #333;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .schedule-row strong {
+      font-weight: 800;
+      color: #1a1a1a;
+    }
+
+    .info-panel.dark .schedule-row {
+      color: #c8cee8;
+    }
+
+    .info-panel.dark .schedule-row strong {
+      color: #fff;
+    }
+
+    /* ── Contact text ── */
+    .contact-desc {
+      font-size: 13.5px;
+      color: #444;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .contact-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .contact-value {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .info-section {
+        flex-direction: column;
+      }
+
+      .info-panel {
+        border-right: none;
+        border-bottom: 1px solid #ebebeb;
+      }
+
+      .info-panel.dark {
+        border-bottom: none;
+        border-radius: 0 0 16px 16px;
+      }
+    }
+
+    /* <...........map section............> */
+
+    /* ── MAP WRAPPER ── */
+    .map-section {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #d0e8ff;
+      height: 520px;
+    }
+
+    /* ── GOOGLE MAP IFRAME ── */
+    .map-section iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── DARK INFO OVERLAY ── */
+    .map-overlay {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      bottom: 24px;
+      width: 300px;
+      background: #1a1f3a;
+      border-radius: 12px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .overlay-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .overlay-subtitle {
+      font-size: 15px;
+      font-weight: 800;
+      color: #f5a623;
+      margin-bottom: 24px;
+    }
+
+    .overlay-address {
+      font-size: 13.5px;
+      color: #c8cee8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .overlay-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .overlay-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f5a623;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .overlay-value:hover {
+      color: #ffbe4d;
+    }
+
+    @media (max-width: 576px) {
+      .map-section {
+        height: auto;
+        flex-direction: column;
+      }
+
+      .map-overlay {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 28px 24px;
+        border-radius: 16px 16px 0 0;
+      }
+
+      .map-section iframe {
+        height: 300px;
+      }
+    }
+
+    /* ............ review-sec.......  */
+    /* ── OUTER WRAPPER — white bg ── */
+    .reviews-section {
+      background: #fff;
+      width: 100%;
+      position: relative;
+      padding: 40px 0 0 0;
+    }
+
+    /* ── HEADER — white bg, title outside grey ── */
+    .reviews-header-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px 28px 0;
+      background: #fff;
+    }
+
+    .reviews-title-main {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    /* ── GREY AREA — cards inside ── */
+    .reviews-grey {
+      background: #e8e8e8;
+      padding: 40px 40px 0 80px;
+      position: relative;
+    }
+
+    /* ── INNER — remove old padding ── */
+    .reviews-inner {
+      padding: 0;
+    }
+
+    .review-nav-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .review-nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f5a623;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      background: #e09400;
+    }
+
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* .......review sec.......  */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      background: #fff;
+    }
+
+    .rv-section {
+      background: #fff;
+      width: 100%;
+      position: relative;
+      padding: 40px 0 0;
+    }
+
+    .rv-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px 28px 0;
+    }
+
+    .rv-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .rv-grey {
+      background: #e8e8e8;
+      padding: 40px 40px 0 80px;
+      position: relative;
+    }
+
+    .rv-nav-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .rv-nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f5a623;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    #rv-white-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 100%;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .rv-viewport {
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .rv-cards {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    .rv-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px 22px 28px;
+      flex: 0 0 calc(33.333% - 14px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .rv-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .rv-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rv-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ddd;
+    }
+
+    .rv-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1a1a1a;
+    }
+
+    .rv-location {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f5a623;
+    }
+
+    .rv-meta {
+      text-align: right;
+    }
+
+    .rv-stars {
+      color: #f5a623;
+      font-size: 15px;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .rv-date {
+      font-size: 11px;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .rv-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .rv-rating-bottom {
+      display: flex;
+      justify-content: center;
+      padding: 28px 0 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .rv-rating-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 40px 20px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+      margin-bottom: -30px;
+    }
+
+    .rv-rating-num {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+
+    .rv-rating-stars {
+      color: #f5a623;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .rv-rating-count {
+      font-size: 12px;
+      color: #999;
+      font-weight: 600;
+    }
+
+    @media (max-width:768px) {
+      .rv-card {
+        flex: 0 0 85%;
+      }
+
+      .rv-cards {
+        overflow-x: auto;
+      }
+    }
+
+    /* similer resturant css */
+    body {
+      background-color: white;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .restaurant-card {
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .restaurant-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-top {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-bottom {
+      background: #ff8c00;
+      color: #fff;
+      padding: 10px;
+      font-weight: 600;
+    }
+
+    /* footer section  */
+
+    .footer-main {
+      background: #e8e8e3;
+      padding: 50px 0 30px;
+    }
+
+    .brand-logo {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .brand-logo .uk-box {
+      display: inline-block;
+      background: #555;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    .store-btns {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      background: #111;
+      color: #fff;
+      border-radius: 9px;
+      padding: 7px 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      min-width: 118px;
+    }
+
+    .store-btn .btn-label {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .store-btn .small-txt {
+      font-size: 0.58rem;
+      color: #ccc;
+      font-weight: 400;
+    }
+
+    .store-btn .big-txt {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .company-text {
+      font-size: 0.75rem;
+      color: #555;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .subscribe-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    .subscribe-wrap {
+      display: flex;
+      background: #fff;
+      border-radius: 50px;
+      overflow: hidden;
+      padding: 4px 4px 4px 16px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .subscribe-wrap input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.83rem;
+      color: #888;
+      flex: 1;
+      padding: 6px 0;
+    }
+
+    .subscribe-wrap button {
+      background: #e8730a;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .subscribe-wrap button:hover {
+      background: #cf6309;
+    }
+
+    .spam-text {
+      font-size: 0.72rem;
+      color: #777;
+      margin-bottom: 18px;
+    }
+
+    .spam-text a {
+      color: #555;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      background: #111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+    }
+
+    .footer-link-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links li a {
+      font-size: 0.82rem;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      padding-bottom: 1px;
+    }
+
+    .footer-links li a:hover {
+      color: #e8730a;
+      border-color: #e8730a;
+    }
+
+    .footer-bottom {
+      background: #1a1a2e;
+      padding: 16px 0;
+    }
+
+    .footer-bottom-text {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin: 0;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .footer-bottom-links a {
+      font-size: 0.75rem;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .footer-bottom-links a:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 767px) {
+      .footer-bottom-links {
+        justify-content: flex-start;
+        margin-top: 8px;
+      }
+
+      .footer-col {
+        margin-bottom: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar d-flex justify-content-between align-items-center sticky-top">
+
+    <div>
+      ⭐ Get 5% off your first order,
+      <span class="promo">Promo: ORDER5</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+
+      <div>
+        📍 <span id="addressText">Regent Street, A4, A4201, London</span>
+        <span class="location" onclick="openModal()">Change Location</span>
+      </div>
+
+      <a href="order.html" class="cart-box">
+        🛒 <span id="cartCount">0</span> Items
+        <span>GBP <span id="cartPrice">0.00</span></span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-custom shadow-sm">
+
+    <div class="container-fluid">
+
+      <a class="navbar-brand brand" href="#">
+        Order<span>UK</span>
+      </a>
+
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        ☰
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="menu">
+
+        <ul class="navbar-nav gap-5">
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html#browse-menu">Browse Menu</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html#special-offers">Special Offers</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Restaurants</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Track Order</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <button class="login-btn">👤 Login/Signup</button>
+
+    </div>
+  </nav>
+
+  <!-- MODAL (Change Location) -->
+  <div class="modal fade" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+
+        <h5>Change Address</h5>
+
+        <input type="text" id="newAddress" class="form-control my-3" placeholder="Enter new address">
+
+        <button class="btn btn-success" onclick="saveAddress()">Save</button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-banner container">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-content">
+
+      <div class="hero-tagline">I'm lovin' it!</div>
+      <div class="hero-title">McDonald's East London</div>
+
+      <div class="hero-badges">
+
+        <div class="hero-badge">
+          <!-- SVG -->
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="3" />
+            <path d="M3 9h18" />
+            <path d="M9 21V9" />
+          </svg>
+          Minimum Order: 12 GBP
+        </div>
+
+        <div class="hero-badge">
+          <!-- SVG -->
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Delivery in 20–25 Minutes
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- OPEN BADGE -->
+    <div class="open-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </svg>
+      Open until 3:00 AM
+    </div>
+
+    <!-- RATING -->
+    <div class="hero-rating-box d-none d-md-block">
+      <div class="hero-rating-num">3.4</div>
+      <div class="hero-stars">★★★☆☆</div>
+      <div class="hero-rating-cnt">1,360 reviews</div>
+    </div>
+
+    <!-- IMAGE -->
+    <img class="hero-img d-none d-md-block" src="images/Rectangle 44.png" alt="food">
+
+  </div>
+  <div class="container offers-bar d-flex align-items-center justify-content-between gap-3 pt-5">
+    <h6 class="offers-title">All Offers from McDonald's East London</h6>
+
+    <div class="search-wrapper">
+      <!-- Search Icon -->
+      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+
+      <input type="text" id="menuSearch" class="search-input" placeholder="Search from menu..." />
+
+      <button class="clear-btn" id="clearBtn" title="Clear">&#x2715;</button>
+    </div>
+  </div>
+
+  <!-- ══════════ STICKY NAVBAR ══════════ -->
+  <nav class="menu-navbar">
+    <div class="nav-scroll" id="mainNav">
+      <a class="nav-pill offers-pill active" href="#offers" data-section="offers">Offers</a>
+      <a class="nav-pill" href="#burgers" data-section="burgers">Burgers</a>
+      <a class="nav-pill" href="#fries" data-section="fries">Fries</a>
+      <a class="nav-pill" href="#salads" data-section="salads">Salads</a>
+      <a class="nav-pill" href="#colddrinks" data-section="colddrinks">Cold Drinks</a>
+      <a class="nav-pill" href="#hotdrinks" data-section="hotdrinks">Hot Drinks</a>
+      <a class="nav-pill" href="#happymeal" data-section="happymeal">Happy Meal</a>
+      <a class="nav-pill" href="#desserts" data-section="desserts">Desserts</a>
+      <a class="nav-pill" href="#mcaffiliate" data-section="mcaffiliate">Mc affiliates</a>
+      <a class="nav-pill" href="#snacks" data-section="snacks">Snacks</a>
+      <a class="nav-pill" href="#staff" data-section="staff">Staff</a>
+    </div>
+  </nav>
+
+  <!-- ══════════ PAGE CONTENT ══════════ -->
+  <div class="container-lg py-5">
+
+    <!-- ── OFFER BANNERS ── -->
+    <section id="offers">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/first order.png" alt="First Order Discount" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald’s East London</div>
+              <div class="offer-label">First Order Discount</div>
+            </div>
+            <div class="offer-new-badge">-20%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/vegan discount.png" alt="Vegan Discount" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald’s East London</div>
+              <div class="offer-label">Vegan Discount</div>
+            </div>
+            <div class="offer-new-badge">-20%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/free icecreamm.png" alt="Free Ice Cream" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald’s East London</div>
+              <div class="offer-label">Free Ice Cream Offer</div>
+            </div>
+            <div class="offer-new-badge">-100%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BURGERS ── -->
+    <section id="burgers">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Burgers</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="royal cheese burger extra fries">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">Royal Cheese Burger with extra Fries</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 mcchicken bigmac">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 cheeseburger">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 wrap combo">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 nuggets set">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 quarter pounder">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FRIES ── -->
+    <section id="fries">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Fries</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="small cheese fries">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">Small Cheese Fries</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries large combo">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries medium portion">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="combo fries seasoned dipping">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries xl cheese bacon">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries sweet potato">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COLD DRINKS ── -->
+    <section id="colddrinks">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Cold Drinks</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="cold drink cola refreshing">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">Small Cheese Burger</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 icecream.png" alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink lemonade mint">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink smoothie strawberry">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=300&q=80"
+                alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="combo cold drink milkshake chocolate">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300&q=80"
+                alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink orange juice fresh">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&q=80"
+                alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink sprite fizzy">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries,
+                  3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=300&q=80"
+                alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- <........................info section..............> -->
+  <div class="container-lg">
+    <div class="info-section">
+
+      <!-- ── DELIVERY INFORMATION ── -->
+      <div class="info-panel">
+        <div class="panel-heading">
+          <!-- delivery scooter icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-1" />
+            <circle cx="7" cy="17" r="2" />
+            <circle cx="17" cy="17" r="2" />
+            <path d="M9 17h6" />
+          </svg>
+          Delivery information
+        </div>
+
+        <div class="schedule-row"><strong>Monday:</strong> 12:00 AM–3:00 AM, 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Tuesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Wednesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Thursday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Friday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Saturday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Sunday:</strong> 8:00 AM–12:00 AM</div>
+        <div class="schedule-row" style="margin-top:16px;"><strong>Estimated time until delivery:</strong> 20 min</div>
+      </div>
+
+      <!-- ── CONTACT INFORMATION ── -->
+      <div class="info-panel">
+        <div class="panel-heading">
+          <!-- contact/id card icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="M7 8h.01M7 12h.01M7 16h.01" />
+            <path d="M11 8h6M11 12h6M11 16h4" />
+          </svg>
+          Contact information
+        </div>
+
+        <p class="contact-desc">
+          If you have allergies or other dietary restrictions, please contact the restaurant. The restaurant will
+          provide food-specific information upon request.
+        </p>
+
+        <div class="contact-label">Phone number</div>
+        <div class="contact-value">+934443–43</div>
+
+        <div class="contact-label">Website</div>
+        <div class="contact-value">
+          <a href="http://mcdonalds.uk/" target="_blank"
+            style="color:#333; text-decoration:none;">http://mcdonalds.uk/</a>
+        </div>
+      </div>
+
+      <!-- ── OPERATIONAL TIMES (dark) ── -->
+      <div class="info-panel dark">
+        <div class="panel-heading">
+          <!-- clock icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          Operational Times
+        </div>
+
+        <div class="schedule-row"><strong>Monday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Tuesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Wednesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Thursday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Friday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Saturday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Sunday:</strong> 8:00 AM–3:00 AM</div>
+      </div>
+
+    </div>
+  </div>
+  <!-- <.................map section...........> -->
+
+  <div class="container-lg py-5">
+    <div class="map-section">
+
+      <!-- DARK INFO OVERLAY -->
+      <div class="map-overlay">
+        <div class="overlay-title">McDonald's</div>
+        <div class="overlay-subtitle">South London</div>
+        <div class="overlay-address">
+          Tooley St, London Bridge, London SE1 2TF,<br>United Kingdom
+        </div>
+        <div class="overlay-label">Phone number</div>
+        <a href="tel:+93444343" class="overlay-value">+934443–43</a>
+        <div class="overlay-label">Website</div>
+        <a href="http://mcdonalds.uk/" target="_blank" class="overlay-value">http://mcdonalds.uk/</a>
+      </div>
+
+      <!-- GOOGLE MAP -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.6!2d-0.0872!3d51.5045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ab10955e37%3A0x3ffce1f7b8e98f4b!2sMcDonald's%20London%20Bridge!5e0!3m2!1sen!2suk!4v1700000000000"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+    </div>
+  </div>
+
+  <!-- .............review-sec......  -->
+  <div class="rv-section">
+
+    <div class="rv-header">
+      <h2 class="rv-title">Customer Reviews</h2>
+
+      <div class="rv-nav-btns">
+        <button class="rv-nav-btn" id="rvPrev">
+          ‹
+        </button>
+        <button class="rv-nav-btn" id="rvNext">
+          ›
+        </button>
+      </div>
+    </div>
+
+    <div class="rv-grey">
+      <div id="rv-white-strip"></div>
+
+      <div class="rv-viewport">
+        <div class="rv-cards" id="rvCarousel">
+
+          <!-- SAME DATA -->
+          <!-- Card 1 -->
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=11" />
+                <div>
+                  <div class="rv-name">St Glx</div>
+                  <div class="rv-location">South London</div>
+                </div>
+              </div>
+              <div class="rv-meta">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-date">24th September, 2023</div>
+              </div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=22" />
+                <div>
+                  <div class="rv-name">St Glx</div>
+                  <div class="rv-location">South London</div>
+                </div>
+              </div>
+              <div class="rv-meta">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-date">24th September, 2023</div>
+              </div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=33" />
+                <div>
+                  <div class="rv-name">St Glx</div>
+                  <div class="rv-location">South London</div>
+                </div>
+              </div>
+              <div class="rv-meta">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-date">24th September, 2023</div>
+              </div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=44" />
+                <div>
+                  <div class="rv-name">St Glx</div>
+                  <div class="rv-location">South London</div>
+                </div>
+              </div>
+              <div class="rv-meta">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-date">24th September, 2023</div>
+              </div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=55" />
+                <div>
+                  <div class="rv-name">St Glx</div>
+                  <div class="rv-location">South London</div>
+                </div>
+              </div>
+              <div class="rv-meta">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-date">24th September, 2023</div>
+              </div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RATING -->
+      <div class="rv-rating-bottom">
+        <div class="rv-rating-box">
+          <div class="rv-rating-num">3.4</div>
+          <div class="rv-rating-stars">★★★★☆</div>
+          <div class="rv-rating-count">1,360 reviews</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- .............similer sec...........  -->
+
+  <div class="container py-3">
+
+    <h2 class="section-title">Similer Restaurants</h2>
+
+    <div class="row g-4">
+
+      <!-- McDonald's -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-mcd">
+            <img src="images/Rectangle 13 (1).png">
+          </div>
+          <div class="card-bottom">McDonald's London</div>
+        </div>
+      </div>
+
+      <!-- Papa Johns -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-papa">
+            <img src="images/papa jones.png">
+          </div>
+          <div class="card-bottom">Papa Johns</div>
+        </div>
+      </div>
+
+      <!-- KFC -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-kfc">
+            <img src="images/macdonald.png">
+          </div>
+          <div class="card-bottom">KFC West London</div>
+        </div>
+      </div>
+
+      <!-- Texas Chicken -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-texas">
+            <img src="images/Rectangle 13 (2).png">
+          </div>
+          <div class="card-bottom">Texas Chicken</div>
+        </div>
+      </div>
+
+      <!-- Burger King -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-burger">
+            <img src="images/Rectangle 13 (3).png">
+          </div>
+          <div class="card-bottom">Burger King</div>
+        </div>
+      </div>
+
+      <!-- Shawarma -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-shawarma">
+            <img src="images/Rectangle 13 (4).png">
+          </div>
+          <div class="card-bottom">Shawarma 1</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Main -->
+  <div class="footer-main">
+    <div class="container py-5 ">
+      <div class="row g-4">
+
+        <!-- Col 1: Logo -->
+        <div class="col-12 col-sm-6 col-lg-3 footer-col">
+          <div class="brand-logo">Order<span class="uk-box">uk</span></div>
+          <div class="store-btns">
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              <div class="btn-label"><span class="small-txt">Download on the</span><span class="big-txt">App
+                  Store</span></div>
+            </a>
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M3.18 23.76c.28.15.6.19.92.1l12.39-7.17-2.63-2.63-10.68 9.7zm-1.7-20.1C1.17 4 1 4.5 1 5.1v13.8c0 .6.17 1.1.48 1.44l.08.07 7.74-7.74v-.18L1.56 3.59l-.08.07zm16.68 9.47l-2.19-2.19-2.19 2.19 2.19 2.19 2.19-2.19zm-8.07-7.26L.17 1.24C-.15 1.15-.47 1.19-.76 1.35L10.09 12.2l6-6.33z" />
+              </svg>
+              <div class="btn-label"><span class="small-txt">GET IT ON</span><span class="big-txt">Google
+                  Play</span></div>
+            </a>
+          </div>
+          <p class="company-text">Company # 490039-445, Registered with<br>House of companies.</p>
+        </div>
+
+        <!-- Col 2: Subscribe -->
+        <div class="col-12 col-sm-6 col-lg-4 footer-col">
+          <p class="subscribe-title">Get Exclusive Deals in your Inbox</p>
+          <div class="subscribe-wrap">
+            <input type="email" placeholder="youremail@gmail.com">
+            <button>Subscribe</button>
+          </div>
+          <p class="spam-text">we wont spam, read our <a href="#">email policy</a></p>
+          <div class="social-icons">
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="#fff" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2" />
+                <circle cx="17.5" cy="6.5" r="1" fill="#fff" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="17" height="17">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.988l4.27 5.647 4.736-5.647zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 3: Legal Pages -->
+        <div class="col-6 col-lg-2 footer-col">
+          <p class="footer-link-title">Legal Pages</p>
+          <ul class="footer-links">
+            <li><a href="#">Terms and conditions</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Modern Slavery Statement</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Important Links -->
+        <div class="col-6 col-lg-3 footer-col">
+          <p class="footer-link-title">Important Links</p>
+          <ul class="footer-links">
+            <li><a href="#">Get help</a></li>
+            <li><a href="#">Add your restaurant</a></li>
+            <li><a href="#">Sign up to deliver</a></li>
+            <li><a href="#">Create a business account</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="container px-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+        <p class="footer-bottom-text">Order.uk Copyright 2026, All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Pricing</a>
+          <a href="#">Do not sell or share my personal information</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>

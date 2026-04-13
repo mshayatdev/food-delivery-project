@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Order</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+
+    .order-box {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 40px;
+      color: gray;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="order-box">
+
+      <h3 class="mb-4">🛒 Your Order</h3>
+
+      <!-- Cart Items Table -->
+      <table class="table table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="orderTable">
+          <!-- JS se items yahan aayenge -->
+        </tbody>
+      </table>
+
+      <!-- Empty Message -->
+      <div id="emptyCart" class="empty-cart">
+        Your cart is empty 🍔
+      </div>
+
+      <!-- Total Section -->
+      <div class="d-flex justify-content-between mt-3">
+        <h5>Total Bill:</h5>
+        <h5 id="grandTotal">Rs 0</h5>
+      </div>
+
+      <button class="btn btn-success w-100 mt-3">
+        Place Order
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let orderTable = document.getElementById("orderTable");
+    let emptyCart = document.getElementById("emptyCart");
+    let grandTotal = document.getElementById("grandTotal");
+
+    function renderCart() {
+      orderTable.innerHTML = "";
+
+      if (cart.length === 0) {
+        emptyCart.style.display = "block";
+        grandTotal.innerText = "Rs 0";
+        return;
+      }
+
+      emptyCart.style.display = "none";
+
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        let itemTotal = item.price * item.qty;
+        total += itemTotal;
+
+        orderTable.innerHTML += `
+          <tr>
+            <td>${item.name}</td>
+            <td>Rs ${item.price}</td>
+            <td>${item.qty}</td>
+            <td>Rs ${itemTotal}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="removeItem(${index})">
+                Remove
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      grandTotal.innerText = "Rs " + total;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+
+</body>
+</html>

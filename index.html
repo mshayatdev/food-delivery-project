@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Order UK</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      background: #f8f9fa;
+      padding: 8px 20px;
+      font-size: 14px;
+    }
+
+    .promo {
+      color: #ff8800;
+      font-weight: 600;
+    }
+
+    .location {
+      cursor: pointer;
+      color: #ff8800;
+      margin-left: 10px;
+    }
+
+    .cart-box {
+      background: #0d6efd;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* NAVBAR */
+    .navbar-custom {
+      padding: 15px 20px;
+    }
+
+    .brand {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .brand span {
+      color: #ff8800;
+    }
+
+    .nav-link.active {
+      background: #ff8800;
+      color: white !important;
+      border-radius: 20px;
+      padding: 6px 15px;
+    }
+
+    .login-btn {
+      background: #0b1320;
+      color: white;
+      border-radius: 20px;
+      padding: 8px 20px;
+    }
+
+    /* hero section styling */
+
+    /* ── HERO WRAPPER ── */
+    .hero-section {
+      position: relative;
+      background: #03081F;
+      width: 100%;
+      max-width: 1528px;
+      min-height: 610px;
+      overflow: hidden;
+      border-radius: 0;
+    }
+
+    /* ── ORANGE BLOB (right half ellipse) ── */
+    .orange-blob {
+      position: absolute;
+      right: -2%;
+      top: 5%;
+      width: 52%;
+      height: 120%;
+      background: #FC8A06;
+      border-radius: 60% 0 0 60% / 50% 0 0 50%;
+      z-index: 1;
+    }
+
+    /* ── GHOST (faded face behind person) ── */
+    .ghost-img {
+      position: absolute;
+      left: 42%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+      width: 805px;
+      height: 537px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 50%;
+      /* opacity: 0.08; */
+      filter: grayscale(1);
+      z-index: 2;
+    }
+
+    /* ── MAIN PERSON (pizza girl) ── */
+    .person-img {
+      position: absolute;
+      bottom: 0;
+      left: 55%;
+      transform: translateX(-50%);
+      height: 100%;
+      max-height: 541px;
+      max-width: 465px;
+      object-fit: cover;
+      object-position: top center;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* ── LEFT TEXT CONTENT ── */
+    .hero-left {
+      position: relative;
+      z-index: 10;
+      padding: 170px 40px;
+    }
+
+    .hero-subtitle {
+      color: #b0bec5;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      color: #ffffff;
+      font-size: 50px;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .hero-title-orange {
+      color: #FC8A06;
+      font-size: 50px;
+      font-weight: 600;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .search-label {
+      color: #90a4ae;
+      font-size: 12px;
+      margin: 30px 0 10px 20px;
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 50px;
+      overflow: hidden;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 13px 20px;
+      font-size: 13px;
+      color: #555;
+      font-family: 'Poppins', sans-serif;
+      background: transparent;
+    }
+
+    .search-bar input::placeholder {
+      color: #aaa;
+    }
+
+    .search-bar button {
+      background: #FC8A06;
+      color: #fff;
+      border: none;
+      padding: 13px 28px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-bar button:hover {
+      background: #ea6500;
+    }
+
+    /* ── NOTIFICATION CARDS (right side) ── */
+    .cards-column {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 60px;
+      padding: 30px 30px 30px 20px;
+    }
+
+    .notify-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      min-width: 220px;
+      max-width: 390px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      animation: slideIn 0.5s ease both;
+    }
+
+    #card-2 {
+      margin-left: 40px;
+    }
+
+    #card-1 {
+      margin-left: -60px;
+
+    }
+
+    .notify-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .notify-card:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    .notify-card:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .card-step-num {
+      position: absolute;
+      top: -30px;
+      right: 5px;
+      font-size: 30px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.2);
+      line-height: 1;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+
+    .brand-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .brand-label span {
+      color: #f97316;
+    }
+
+    .card-time {
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 1px;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: #777;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+
+      .hero-title,
+      .hero-title-orange {
+        font-size: 28px;
+      }
+
+      .cards-column {
+        padding: 20px 16px;
+      }
+
+      .notify-card {
+        min-width: 180px;
+      }
+
+      .person-img {
+        height: 80%;
+        left: 40%;
+      }
+
+      .ghost-img {
+        left: 40%;
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .person-img {
+        display: none;
+      }
+
+      .ghost-img {
+        display: none;
+      }
+
+
+    }
+
+    /* <!-- ===== deal section CSS ===== --> */
+    .food-card {
+      cursor: pointer;
+    }
+
+    .food-img {
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .food-card:hover .food-img {
+      transform: scale(1.04);
+    }
+
+    .discount-badge {
+      background-color: #1a1f36;
+      font-size: 13px;
+    }
+
+    .card-overlay {
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
+    }
+
+    .filter-tab {
+      border: 1.5px solid #ddd;
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+      background: #fff;
+      transition: all 0.2s;
+    }
+
+    .filter-tab:hover {
+      border-color: #F5A623;
+      color: #F5A623;
+    }
+
+    .filter-tab.active {
+      border-color: #F5A623;
+      color: #F5A623;
+      font-weight: 600;
+    }
+
+    /* popular section css */
+
+    /* --- Section Title --- */
+    .categories-title {
+      font-size: 22px;
+      color: #111;
+    }
+
+    /* --- Card Base --- */
+    .cat-card {
+      border: 1px solid #e8e8e8;
+      background: #fff;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    }
+
+    /* --- Image Wrapper --- */
+    .cat-img-wrap {
+      background-color: #f9f6ee;
+      /* light cream bg like screenshot */
+      padding: 10px;
+    }
+
+    .cat-img {
+      height: 130px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* --- Card Info Bottom --- */
+    .cat-info {
+      background-color: #12172b !important;
+      min-height: 58px;
+    }
+
+    .cat-name {
+      font-size: 13px;
+      color: #F5A623 !important;
+      line-height: 1.3;
+    }
+
+    .cat-info small {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* Large Desktop */
+    @media (min-width: 1200px) {
+      .cat-img {
+        height: 140px;
+      }
+
+      .categories-title {
+        font-size: 24px;
+      }
+    }
+
+    /* Laptop */
+    @media (max-width: 1199px) {
+      .cat-img {
+        height: 125px;
+      }
+    }
+
+    /* Tablet Landscape */
+    @media (max-width: 991px) {
+      .cat-img {
+        height: 115px;
+      }
+
+      .categories-title {
+        font-size: 19px;
+      }
+
+      .cat-name {
+        font-size: 12px;
+      }
+    }
+
+    /* Tablet Portrait — 2 cards per row */
+    @media (max-width: 767px) {
+      .categories-title {
+        font-size: 17px;
+      }
+
+      .cat-img {
+        height: 130px;
+      }
+
+      .cat-name {
+        font-size: 12px;
+      }
+
+      .cat-info {
+        min-height: 52px;
+      }
+    }
+
+    /* Mobile Large — 2 cards per row */
+    @media (max-width: 575px) {
+      .categories-title {
+        font-size: 15px;
+      }
+
+      .cat-img {
+        height: 110px;
+      }
+
+      .cat-img-wrap {
+        padding: 8px;
+      }
+
+      .cat-name {
+        font-size: 11px;
+      }
+
+      .cat-info {
+        padding: 6px 10px !important;
+        min-height: 48px;
+      }
+
+      .cat-info small {
+        font-size: 10px;
+      }
+    }
+
+    /* Mobile Small */
+    @media (max-width: 400px) {
+      .cat-img {
+        height: 95px;
+      }
+
+      .cat-name {
+        font-size: 10px;
+      }
+    }
+
+    /* papoluar resturant css */
+
+    .section-title {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .restaurant-card {
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .restaurant-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-top {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-bottom {
+      background: #ff8c00;
+      color: #fff;
+      padding: 10px;
+      font-weight: 600;
+    }
+
+    /* new person section css */
+
+    .hero2 {
+      background: #e9e9e9;
+      border-radius: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+      overflow: hidden;
+    }
+
+    .hero2 img {
+      max-width: 100%;
+      height: auto;
+    }
+
+
+    .hero-title2 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #0c1222;
+    }
+
+    .hero-title2 span {
+      background: #ff9900;
+      color: #000;
+      font-size: 14px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      vertical-align: middle;
+    }
+
+    .highlight-box {
+      display: inline-block;
+      background: #0c1222;
+      color: #fff;
+      padding: 10px 30px 10px 10px;
+      border-radius: 40px;
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: 600;
+
+    }
+
+    .highlight-box h3 {
+      padding: 0px 60px;
+    }
+
+    .highlight-box span {
+      color: #ff9900;
+    }
+
+    .desc {
+      margin-top: 15px;
+      color: black;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .store-btn img {
+      height: 45px;
+      margin-right: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        text-align: center;
+        padding: 25px;
+      }
+
+      .hero-title2 {
+        font-size: 32px;
+      }
+
+      .highlight-box {
+        font-size: 18px;
+      }
+
+      .store-btn {
+        justify-content: center;
+      }
+    }
+
+    /* person and rider section */
+    .partner-section {
+      padding: 40px 0;
+      background: #fff;
+    }
+
+    .promo-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    .promo-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* .promo-card .dark-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 40%, rgba(0,0,0,0.15) 100%);
+  } */
+    .promo-card .top-badge {
+      position: absolute;
+      top: 0px;
+      left: 18px;
+      background: #fff;
+      color: #111;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 8px;
+      z-index: 2;
+    }
+
+    .promo-card .card-body-content {
+      position: relative;
+      z-index: 2;
+      padding: 24px;
+    }
+
+    .promo-card .sub-label {
+      color: #e8730a;
+      font-size: 0.85rem;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    .promo-card .main-title {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .promo-card .btn-started {
+      background: #e8730a;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .promo-card .btn-started:hover {
+      background: #cf6309;
+      color: #fff;
+    }
+
+    @media (max-width: 767px) {
+      .promo-card {
+        min-height: 280px;
+        margin-bottom: 16px;
+        min-width: 100%;
+      }
+
+      .promo-card .main-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* faq section */
+    body {
+      background: #f5f5f5;
+    }
+
+    /* Section */
+    .faq-section {
+      background: #eee;
+      padding: 60px 20px;
+      border-radius: 12px;
+    }
+
+    /* Tabs */
+    .faq-tabs {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .faq-tabs a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .faq-tabs .active {
+      border: 2px solid orange;
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: black;
+    }
+
+    /* Dark box */
+    .faq-box {
+      background: #07122b;
+      border-radius: 12px;
+      padding: 30px;
+      color: white;
+    }
+
+    /* Left menu */
+    .faq-menu {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-menu button {
+      width: 100%;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: #fff;
+      padding: 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .faq-menu .active {
+      background: orange;
+      color: black;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+    }
+
+    .faq-tabs a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 2px solid transparent;
+      /* IMPORTANT */
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .faq-tabs a.active {
+      border-color: orange;
+      color: black;
+    }
+
+    /* Cards */
+    .step-card {
+      background: #D9D9D9;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      min-width: 238px;
+      height: 285px;
+    }
+
+    .step-card img {
+      width: 128px;
+      height: 128px;
+      margin-bottom: 10px;
+    }
+
+    .step-title {
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: black;
+    }
+
+    .step-text {
+      font-size: 13px;
+      color: black;
+      font-weight: 600;
+    }
+
+    /* Bottom text */
+    .faq-desc {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .faq-menu {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .faq-menu button {
+        white-space: nowrap;
+      }
+
+      .faq-tabs {
+        justify-content: center;
+      }
+    }
+
+    /* stat section */
+    .stats-section .container {
+      background: #FC8A06;
+      padding: 40px 0;
+      border-radius: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: #fff;
+    }
+
+    .stat-number {
+      font-family: 'Nunito', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* footer section  */
+
+    .footer-main {
+      background: #e8e8e3;
+      padding: 50px 0 30px;
+    }
+
+    .brand-logo {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .brand-logo .uk-box {
+      display: inline-block;
+      background: #555;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    .store-btns {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      background: #111;
+      color: #fff;
+      border-radius: 9px;
+      padding: 7px 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      min-width: 118px;
+    }
+
+    .store-btn .btn-label {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .store-btn .small-txt {
+      font-size: 0.58rem;
+      color: #ccc;
+      font-weight: 400;
+    }
+
+    .store-btn .big-txt {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .company-text {
+      font-size: 0.75rem;
+      color: #555;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .subscribe-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    .subscribe-wrap {
+      display: flex;
+      background: #fff;
+      border-radius: 50px;
+      overflow: hidden;
+      padding: 4px 4px 4px 16px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .subscribe-wrap input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.83rem;
+      color: #888;
+      flex: 1;
+      padding: 6px 0;
+    }
+
+    .subscribe-wrap button {
+      background: #e8730a;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .subscribe-wrap button:hover {
+      background: #cf6309;
+    }
+
+    .spam-text {
+      font-size: 0.72rem;
+      color: #777;
+      margin-bottom: 18px;
+    }
+
+    .spam-text a {
+      color: #555;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      background: #111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: #fff;
+    }
+
+    .footer-link-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links li a {
+      font-size: 0.82rem;
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      padding-bottom: 1px;
+    }
+
+    .footer-links li a:hover {
+      color: #e8730a;
+      border-color: #e8730a;
+    }
+
+    .footer-bottom {
+      background: #1a1a2e;
+      padding: 16px 0;
+    }
+
+    .footer-bottom-text {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin: 0;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .footer-bottom-links a {
+      font-size: 0.75rem;
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    .footer-bottom-links a:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 767px) {
+      .footer-bottom-links {
+        justify-content: flex-start;
+        margin-top: 8px;
+      }
+
+      .footer-col {
+        margin-bottom: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar d-flex justify-content-between align-items-center">
+
+    <div>
+      ⭐ Get 5% off your first order,
+      <span class="promo">Promo: ORDER5</span>
+    </div>
+
+    <div class="d-flex align-items-center gap-3">
+
+      <div>
+        📍 <span id="addressText">Regent Street, A4, A4201, London</span>
+        <span class="location" onclick="openModal()">Change Location</span>
+      </div>
+
+      <a href="order.html" class="cart-box">
+        🛒 <span id="cartCount">0</span> Items
+        <span>GBP <span id="cartPrice">0.00</span></span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-custom shadow-sm sticky-top">
+
+    <div class="container-fluid">
+
+      <a class="navbar-brand brand" href="#">
+        Order<span>UK</span>
+      </a>
+
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        ☰
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-center" id="menu">
+
+        <ul class="navbar-nav gap-5">
+
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#browse-menu">Browse Menu</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#special-offers">Special Offers</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="resturent.html">Restaurants</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Track Order</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <button class="login-btn">👤 Login/Signup</button>
+
+    </div>
+  </nav>
+
+  <!-- MODAL (Change Location) -->
+  <div class="modal fade" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+
+        <h5>Change Address</h5>
+
+        <input type="text" id="newAddress" class="form-control my-3" placeholder="Enter new address">
+
+        <button class="btn btn-success" onclick="saveAddress()">Save</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- hero section -->
+  <div class="hero-section w-100" id="browse-menu">
+    <!-- Orange background blob -->
+    <div class="orange-blob"></div>
+
+    <!-- Ghost / faded face in background -->
+    <img class="ghost-img" src="images/ghost-image.png" alt="" />
+
+    <!-- Pizza Girl (main person) -->
+    <img class="person-img" src="images/person-hero.png" alt="Girl holding pizza" />
+
+    <!-- Bootstrap Row -->
+    <div class="container-fluid h-100 px-0">
+      <div class="row g-0 align-items-stretch" style="min-height:420px;">
+
+        <!-- LEFT: Text + Search -->
+        <div class="col-lg-5 col-md-6">
+          <div class="hero-left">
+            <p class="hero-subtitle">Order Restaurant food, takeaway and groceries.</p>
+            <h1 class="hero-title">
+              Feast Your Senses,
+              <span class="hero-title-orange">Fast and Fresh</span>
+            </h1>
+            <p class="search-label">Enter a postcode to see what we deliver</p>
+            <div class="search-bar">
+              <input type="text" id="postcodeInput" placeholder="e.g. EC4R 3TE" />
+              <button onclick="handleSearch()">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE: spacer for person image -->
+        <div class="col-lg-3 col-md-2 d-none d-md-block"></div>
+
+        <!-- RIGHT: Notification Cards -->
+        <div class="col-lg-4 col-md-4 d-flex align-items-center">
+          <div class="cards-column w-100">
+
+            <!-- Card 1 -->
+            <div class="notify-card" id="card-1">
+              <div class="card-step-num">1</div>
+              <div class="card-header-row">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">We've Received your order!</div>
+              <div class="card-desc">Awaiting Restaurant acceptance</div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="notify-card" id="card-2">
+              <div class="card-step-num">2</div>
+              <div class="card-header-row">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">Order Accepted! ✅</div>
+              <div class="card-desc">Your order will be delivered shortly</div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="notify-card">
+              <div class="card-step-num">3</div>
+              <div class="card-header-row">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">Your rider's nearby 🎉</div>
+              <div class="card-desc">They're almost there – get ready!</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DEALS SECTION ===== -->
+  <section class="deals-section py-4 bg-white">
+    <div class="container" id="deals-section">
+
+      <!-- Header Row -->
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <h2 class="deals-title fw-bold mb-0 fs-5">
+          🎉 Up to -40% <strong>Order.uk exclusive deals</strong>
+        </h2>
+        <div class="filter-tabs d-flex gap-2 flex-wrap">
+          <button class="btn filter-tab rounded-pill px-4 py-2">Vegan</button>
+          <button class="btn filter-tab rounded-pill px-4 py-2">Sushi</button>
+          <button class="btn filter-tab rounded-pill px-4 py-2 active">Pizza &amp; Fast food</button>
+          <button class="btn filter-tab rounded-pill px-4 py-2">others</button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="row g-3" id="dealsGrid">
+        <!-- Card 1 -->
+        <div class="col-12 col-md-4 deal-item" data-category="fastfood">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=80" class="w-100 food-img"
+              alt="Chef Burgers London" />
+            <span
+              class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-40%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Chef Burgers London</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-12 col-md-4 deal-item" data-category="vegan">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=700&q=80" class="w-100 food-img"
+              alt="Grand Ai Cafe London" />
+            <span
+              class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-20%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Grand Ai Cafe London</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-12 col-md-4 deal-item" data-category="fastfood">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="images/Rectangle 8.png" class="w-100 food-img" alt="Butterbrot Cafe London" />
+            <span
+              class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-17%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Butterbrot Caf'e London</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!-- End Cards Grid -->
+  <!-- ===== POPULAR CATEGORIES SECTION ===== -->
+  <section class="categories-section py-5 bg-white" id="special-offers">
+    <div class="container" id="popular-section">
+
+      <!-- Section Title -->
+      <h2 class="categories-title fw-bold mb-4">Order.uk Popular Categories 😄</h2>
+
+      <!-- Categories Grid -->
+      <div class="row g-3">
+
+        <!-- Card 1 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" class="cat-img w-100"
+                alt="Burgers & Fast food" />
+            </div>
+            <div class="cat-info bg-dark px-3 py-2">
+              <p class="cat-name text-warning fw-bold mb-0">Burgers &amp; Fast food</p>
+              <small class="text-white-50">21 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" class="cat-img w-100"
+                alt="Salads" />
+            </div>
+            <div class="cat-info bg-dark px-3 py-2">
+              <p class="cat-name text-warning fw-bold mb-0">Salads</p>
+              <small class="text-white-50">32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" class="cat-img w-100"
+                alt="Pasta & Casuals" />
+            </div>
+            <div class="cat-info px-3 py-2" style="background-color: #1a1f36;">
+              <p class="cat-name fw-bold mb-0" style="color: #F5A623;">Pasta &amp; Casuals</p>
+              <small class="text-white-50">4 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80" class="cat-img w-100"
+                alt="Pizza" />
+            </div>
+            <div class="cat-info bg-dark px-3 py-2">
+              <p class="cat-name text-warning fw-bold mb-0">Pizza</p>
+              <small class="text-white-50">32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80" class="cat-img w-100"
+                alt="Breakfast" />
+            </div>
+            <div class="cat-info bg-dark px-3 py-2">
+              <p class="cat-name text-warning fw-bold mb-0">Breakfast</p>
+              <small class="text-white-50">4 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80" class="cat-img w-100"
+                alt="Soups" />
+            </div>
+            <div class="cat-info bg-dark px-3 py-2">
+              <p class="cat-name text-warning fw-bold mb-0">Soups</p>
+              <small class="text-white-50">32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Row -->
+
+    </div>
+  </section>
+  <!-- ===== END POPULAR CATEGORIES ===== -->
+  <!-- start papolar resturant  -->
+
+  <div class="container py-3">
+
+    <h2 class="section-title">Popular Restaurants</h2>
+
+    <div class="row g-4">
+
+      <!-- McDonald's -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-mcd">
+            <img src="images/Rectangle 13 (1).png">
+          </div>
+          <div class="card-bottom">McDonald's London</div>
+        </div>
+      </div>
+
+      <!-- Papa Johns -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-papa">
+            <img src="images/papa jones.png">
+          </div>
+          <div class="card-bottom">Papa Johns</div>
+        </div>
+      </div>
+
+      <!-- KFC -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-kfc">
+            <img src="images/macdonald.png">
+          </div>
+          <div class="card-bottom">KFC West London</div>
+        </div>
+      </div>
+
+      <!-- Texas Chicken -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-texas">
+            <img src="images/Rectangle 13 (2).png">
+          </div>
+          <div class="card-bottom">Texas Chicken</div>
+        </div>
+      </div>
+
+      <!-- Burger King -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-burger">
+            <img src="images/Rectangle 13 (3).png">
+          </div>
+          <div class="card-bottom">Burger King</div>
+        </div>
+      </div>
+
+      <!-- Shawarma -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top bg-shawarma">
+            <img src="images/Rectangle 13 (4).png">
+          </div>
+          <div class="card-bottom">Shawarma 1</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- new section persons -->
+
+  <div class="container my-5">
+    <div class="hero2">
+      <div class="row align-items-center">
+
+        <!-- Image -->
+        <div class="col-lg-6 mb-4 mb-lg-0" id="person-image">
+          <img src="images/friends-laughing-using-mobiles 2.png" alt="people">
+        </div>
+
+        <!-- Text -->
+        <div class="col-lg-6">
+          <h1 class="hero-title2">
+            Order<span>.UK</span>ing is more
+          </h1>
+
+          <div class="highlight-box">
+            <h3>
+              <span>Personalised</span> & Instant
+            </h3>
+          </div>
+
+          <p class="desc">
+            Download the Order.uk app for faster ordering
+          </p>
+
+          <div class="d-flex store-btn mt-3">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- partner and rider section -->
+  <div class="partner-section py-1">
+    <div class="container px-3">
+      <div class="row g-3">
+
+        <!-- Card 1: Partner with us -->
+        <div class="col-12 col-lg-6">
+          <div class="promo-card">
+            <img src="images/partner.png" alt="Chef">
+            <div class="dark-overlay"></div>
+            <div class="top-badge">Earn more with lower fees</div>
+            <div class="card-body-content">
+              <p class="sub-label">Signup as a business</p>
+              <h2 class="main-title">Partner with us</h2>
+              <a href="#" class="btn-started">Get Started</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Ride with us -->
+        <div class="col-12 col-lg-6">
+          <div class="promo-card">
+            <img src="images/rider.png" alt="Rider">
+            <div class="dark-overlay"></div>
+            <div class="top-badge">Avail exclusive perks</div>
+            <div class="card-body-content">
+              <p class="sub-label">Signup as a rider</p>
+              <h2 class="main-title">Ride with us</h2>
+              <a href="#" class="btn-started">Get Started</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- faq section -->
+  <div class="container my-5">
+    <div class="faq-section">
+      <div class="d-flex flex-column flex-md-row align-items-center flex-wrap mb-4">
+        <!-- Heading -->
+        <h5 class="fw-bold me-auto mb-3">Know more about us!</h5>
+
+        <!-- Tabs -->
+        <div class="faq-tabs">
+          <a href="#" class="active">Frequent Questions</a>
+          <a href="#">Who we are?</a>
+          <a href="#">Partner Program</a>
+          <a href="#">Help & Support</a>
+        </div>
+      </div>
+
+      <!-- Dark Box -->
+      <div class="faq-box">
+        <div class="row g-4">
+
+          <!-- Left Menu -->
+          <div class="col-md-3 faq-menu">
+            <button class="active">How does Order.Juk work?</button>
+            <button>What payment methods are accepted?</button>
+            <button>Can I track my order in real-time?</button>
+            <button>Are there any special discounts or promotions available?</button>
+            <button>Is Order.Juk available in my area?</button>
+          </div>
+
+          <!-- Right Content -->
+          <div class="col-md-9">
+            <div class="row g-3">
+
+              <!-- Card 1 -->
+              <div class="col-12 col-sm-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Place an Order!</div>
+                  <img src="images/order-food 1.png">
+                  <div class="step-text">
+                    Place order through our website or Mobile app
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="col-12 col-sm-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Track Progress</div>
+                  <img src="images/fq food 2.png">
+                  <div class="step-text">
+                    You can track your order status with delivery time
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="col-12 col-sm-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Get your Order!</div>
+                  <img src="images/fq food 3.png">
+                  <div class="step-text">
+                    Receive your order at a lightning fast speed!
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Text -->
+            <div class="faq-desc">
+              Order.UK simplifies the food ordering process. Browse through our diverse menu, select your favorite
+              dishes, and proceed to checkout. Your delicious meal will be on its way to your doorstep in no time!
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- stat section  -->
+  <section class="stats-section pb-5">
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 gap-md-0">
+        <div class="col-6 col-md stat-item fade-up">
+          <span class="stat-number">546+</span>
+          <span class="stat-label">Restaurants</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md stat-item fade-up">
+          <span class="stat-number">780,900+</span>
+          <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md stat-item fade-up">
+          <span class="stat-number">690+</span>
+          <span class="stat-label">Food Categories</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md stat-item fade-up">
+          <span class="stat-number">17,467+</span>
+          <span class="stat-label">Orders Delivered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Main -->
+  <div class="footer-main">
+    <div class="container py-5 ">
+      <div class="row g-4">
+
+        <!-- Col 1: Logo -->
+        <div class="col-12 col-sm-6 col-lg-3 footer-col">
+          <div class="brand-logo">Order<span class="uk-box">uk</span></div>
+          <div class="store-btns">
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              <div class="btn-label"><span class="small-txt">Download on the</span><span class="big-txt">App
+                  Store</span></div>
+            </a>
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M3.18 23.76c.28.15.6.19.92.1l12.39-7.17-2.63-2.63-10.68 9.7zm-1.7-20.1C1.17 4 1 4.5 1 5.1v13.8c0 .6.17 1.1.48 1.44l.08.07 7.74-7.74v-.18L1.56 3.59l-.08.07zm16.68 9.47l-2.19-2.19-2.19 2.19 2.19 2.19 2.19-2.19zm-8.07-7.26L.17 1.24C-.15 1.15-.47 1.19-.76 1.35L10.09 12.2l6-6.33z" />
+              </svg>
+              <div class="btn-label"><span class="small-txt">GET IT ON</span><span class="big-txt">Google
+                  Play</span></div>
+            </a>
+          </div>
+          <p class="company-text">Company # 490039-445, Registered with<br>House of companies.</p>
+        </div>
+
+        <!-- Col 2: Subscribe -->
+        <div class="col-12 col-sm-6 col-lg-4 footer-col">
+          <p class="subscribe-title">Get Exclusive Deals in your Inbox</p>
+          <div class="subscribe-wrap">
+            <input type="email" placeholder="youremail@gmail.com">
+            <button>Subscribe</button>
+          </div>
+          <p class="spam-text">we wont spam, read our <a href="#">email policy</a></p>
+          <div class="social-icons">
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="#fff" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2" />
+                <circle cx="17.5" cy="6.5" r="1" fill="#fff" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z" />
+              </svg>
+            </a>
+            <a href="#" class="social-icon">
+              <svg viewBox="0 0 24 24" fill="white" width="17" height="17">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.988l4.27 5.647 4.736-5.647zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 3: Legal Pages -->
+        <div class="col-6 col-lg-2 footer-col">
+          <p class="footer-link-title">Legal Pages</p>
+          <ul class="footer-links">
+            <li><a href="#">Terms and conditions</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Modern Slavery Statement</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Important Links -->
+        <div class="col-6 col-lg-3 footer-col">
+          <p class="footer-link-title">Important Links</p>
+          <ul class="footer-links">
+            <li><a href="#">Get help</a></li>
+            <li><a href="#">Add your restaurant</a></li>
+            <li><a href="#">Sign up to deliver</a></li>
+            <li><a href="#">Create a business account</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="container px-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+        <p class="footer-bottom-text">Order.uk Copyright 2024, All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Pricing</a>
+          <a href="#">Do not sell or share my personal information</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+
+</body>
+
+</html>
