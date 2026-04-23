@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food UI</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body class="bg-light" style="font-family: Arial, sans-serif;">
+
+  <header class="sticky-top bg-white" style="z-index: 1050;">
+    <!-- TOPBAR -->
+    <div class="bg-light px-4 py-2 d-flex justify-content-between align-items-center" style="font-size:14px;">
+
+      <div>
+        ⭐ Get 5% off your first order,
+        <span class="promo fw-semibold">Promo: ORDER5</span>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <div>
+          📍 <span id="addressText">Regent Street, A4, A4201, London</span>
+          <span class="location ms-2" id="locationBtn">Change Location</span>
+        </div>
+        <div class="cart-box text-white px-3 py-2 d-flex align-items-center gap-2" id="cartBtn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+          🛒 <span id="cartCount">0</span> Items
+          <span>GBP <span id="cartPrice">0.00</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 px-3">
+      <div class="container-fluid">
+
+        <a class="navbar-brand brand fw-bold fs-3" href="#">
+          Order<span>UK</span>
+        </a>
+
+        <button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Toggle navigation">
+          ☰
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="menu">
+          <ul class="navbar-nav gap-5">
+            <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#browse-menu">Browse Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="#deals-section">Special Offers</a></li>
+            <li class="nav-item"><a class="nav-link" href="restaurant.html">Restaurants</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Track Order</a></li>
+          </ul>
+        </div>
+
+        <button class="login-btn">👤 Login/Signup</button>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- CART OFFCANVAS -->
+  <div class="offcanvas offcanvas-end cart-offcanvas" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title" id="cartOffcanvasLabel">🛒 Your Cart</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItemsList" class="flex-grow-1 overflow-auto">
+        <!-- Cart items will be injected here -->
+      </div>
+      
+      <div class="mt-auto pt-3 border-top">
+        <div class="cart-total-box">
+          <span>Total</span>
+          <span>GBP <span id="cartTotalPrice">0.00</span></span>
+        </div>
+        <button class="checkout-btn" id="openCheckoutBtn" data-bs-dismiss="offcanvas" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL (Change Location) -->
+  <div class="modal fade" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <h5>Change Address</h5>
+        <input type="text" id="newAddress" class="form-control my-3" placeholder="Enter new address">
+        <button class="btn btn-success" id="saveAddressBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL (Checkout) -->
+  <div class="modal fade" id="checkoutModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content p-4 checkout-form">
+        <div class="modal-header border-0 pb-0">
+          <h4 class="modal-title fw-bold">Checkout</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="checkoutForm">
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="coName" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="coPhone" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="coEmail" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Delivery Address</label>
+                <textarea class="form-control" rows="2" id="coAddress" required></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" id="coCity" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Zip Code</label>
+                <input type="text" class="form-control" id="coZip" required>
+              </div>
+            </div>
+
+            <h5 class="fw-bold mb-3">Payment Method</h5>
+            <div class="mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="payCod" value="cod" checked>
+                <label class="form-check-label" for="payCod">Cash on Delivery</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="payCard" value="card">
+                <label class="form-check-label" for="payCard">Credit Card</label>
+              </div>
+            </div>
+
+            <!-- Credit Card Info (Hidden by Default) -->
+            <div class="row g-3 mb-4 d-none" id="ccInfoBox">
+              <div class="col-12">
+                <label class="form-label">Card Number</label>
+                <input type="text" class="form-control" id="ccNumber">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Expiry Date</label>
+                <input type="text" class="form-control" placeholder="MM/YY" id="ccExpiry">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">CVV</label>
+                <input type="text" class="form-control" id="ccCvv">
+              </div>
+            </div>
+
+            <h5 class="fw-bold mb-3">Order Summary</h5>
+            <div class="order-summary-box mb-4">
+              <div id="checkoutSummaryItems"></div>
+              <hr>
+              <div class="d-flex justify-content-between fw-bold fs-5">
+                <span>Total</span>
+                <span>GBP <span id="checkoutSummaryTotal">0.00</span></span>
+              </div>
+            </div>
+
+            <button type="submit" class="checkout-btn py-3">Place Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <div class="hero-section w-100" id="browse-menu">
+    <div class="orange-blob"></div>
+    <img class="ghost-img" src="images/ghost-image.png" alt="Ghost logo background" />
+    <img class="person-img" src="images/person-hero.png" alt="Girl holding pizza" />
+
+    <div class="container-fluid h-100 px-0">
+      <div class="row g-0 align-items-stretch" style="min-height:420px;">
+
+        <!-- LEFT: Text + Search -->
+        <div class="col-12 col-md-8 col-lg-5">
+          <div class="hero-left">
+            <p class="hero-subtitle mb-2">Order Restaurant food, takeaway and groceries.</p>
+            <h1 class="hero-title">
+              Feast Your Senses,
+              <span class="hero-title-orange">Fast and Fresh</span>
+            </h1>
+            <p class="search-label">Enter a postcode to see what we deliver</p>
+            <div class="search-bar">
+              <input type="text" id="postcodeInput" placeholder="e.g. EC4R 3TE" />
+              <button id="searchBtn">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MIDDLE: spacer -->
+        <div class="col-lg-3 col-md-0 d-none d-lg-block"></div>
+
+        <!-- RIGHT: Notification Cards -->
+        <div class="col-12 col-md-4 col-lg-4 d-flex align-items-center">
+          <div class="cards-column w-100">
+
+            <div class="notify-card" id="card-1">
+              <div class="card-step-num">1</div>
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">We've Received your order!</div>
+              <div class="card-desc">Awaiting Restaurant acceptance</div>
+            </div>
+
+            <div class="notify-card" id="card-2">
+              <div class="card-step-num">2</div>
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">Order Accepted! ✅</div>
+              <div class="card-desc">Your order will be delivered shortly</div>
+            </div>
+
+            <div class="notify-card">
+              <div class="card-step-num">3</div>
+              <div class="d-flex align-items-center justify-content-between mb-1">
+                <span class="brand-label">Order<span>&#9632;</span></span>
+                <span class="card-time">now</span>
+              </div>
+              <div class="card-title">Your rider's nearby 🎉</div>
+              <div class="card-desc">They're almost there – get ready!</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DEALS SECTION -->
+  <section class="py-4 bg-white" id="deals-section">
+    <div class="container">
+
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <h2 class="fw-bold mb-0 fs-5">
+          🎉 Up to -40% <strong>Order.uk exclusive deals</strong>
+        </h2>
+        <div class="filter-tabs-wrap">
+          <div class="d-flex gap-2">
+            <button class="btn filter-tab rounded-pill px-4 py-2">Vegan</button>
+            <button class="btn filter-tab rounded-pill px-4 py-2">Sushi</button>
+            <button class="btn filter-tab rounded-pill px-4 py-2 active">Pizza &amp; Fast food</button>
+            <button class="btn filter-tab rounded-pill px-4 py-2">others</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3" id="dealsGrid">
+        <!-- Card 1 -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-4 deal-item" data-category="fastfood">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=80" class="w-100 food-img" alt="Chef Burgers London" loading="lazy" />
+            <span class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-40%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Chef Burgers London</span>
+            </div>
+            <button class="add-btn add-to-cart-btn" data-name="Chef Burgers London" data-price="12.99" aria-label="Add Chef Burgers to cart">+</button>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-4 deal-item" data-category="vegan">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=700&q=80" class="w-100 food-img" alt="Grand Ai Cafe London" loading="lazy" />
+            <span class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-20%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Grand Ai Cafe London</span>
+            </div>
+            <button class="add-btn add-to-cart-btn" data-name="Grand Ai Cafe London" data-price="9.50" aria-label="Add Grand Ai Cafe to cart">+</button>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-12 col-md-6 col-lg-4 col-xl-4 deal-item" data-category="fastfood">
+          <div class="food-card position-relative rounded-4 overflow-hidden">
+            <img src="images/Rectangle 8.png" class="w-100 food-img" alt="Butterbrot Cafe London" loading="lazy" />
+            <span class="discount-badge position-absolute top-0 end-0 m-3 text-white fw-bold rounded-3 px-2 py-1">-17%</span>
+            <div class="card-overlay position-absolute bottom-0 start-0 w-100 p-3">
+              <small class="text-warning fw-semibold d-block">Restaurant</small>
+              <span class="text-white fw-bold fs-6">Butterbrot Caf'e London</span>
+            </div>
+            <button class="add-btn add-to-cart-btn" data-name="Butterbrot Caf'e London" data-price="14.20" aria-label="Add Butterbrot Cafe to cart">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR CATEGORIES SECTION -->
+  <section class="py-5 bg-white" id="special-offers">
+    <div class="container" id="popular-section">
+
+      <h2 class="fw-bold mb-4 cat-name" style="font-size:22px; color:#111;">Order.uk Popular Categories 😄</h2>
+
+      <div class="row g-3">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" class="cat-img w-100" alt="Burgers & Fast food" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Burgers &amp; Fast food</p>
+              <small>21 Restaurants</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" class="cat-img w-100" alt="Salads" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Salads</p>
+              <small>32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" class="cat-img w-100" alt="Pasta & Casuals" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Pasta &amp; Casuals</p>
+              <small>4 Restaurants</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80" class="cat-img w-100" alt="Pizza" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Pizza</p>
+              <small>32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80" class="cat-img w-100" alt="Breakfast" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Breakfast</p>
+              <small>4 Restaurants</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+          <div class="cat-card rounded-3 overflow-hidden">
+            <div class="cat-img-wrap">
+              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80" class="cat-img w-100" alt="Soups" loading="lazy" />
+            </div>
+            <div class="cat-info px-3 py-2">
+              <p class="cat-name fw-bold mb-0">Soups</p>
+              <small>32 Restaurants</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- POPULAR RESTAURANTS -->
+  <div class="container py-3">
+    <h2 class="fw-bold fs-4 mb-4">Popular Restaurants</h2>
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (1).png" alt="McDonald's" loading="lazy"></div>
+          <div class="card-bottom">McDonald's London</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/papa jones.png" alt="Papa Johns" loading="lazy"></div>
+          <div class="card-bottom">Papa Johns</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/macdonald.png" alt="KFC" loading="lazy"></div>
+          <div class="card-bottom">KFC West London</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (2).png" alt="Texas Chicken" loading="lazy"></div>
+          <div class="card-bottom">Texas Chicken</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (3).png" alt="Burger King" loading="lazy"></div>
+          <div class="card-bottom">Burger King</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (4).png" alt="Shawarma 1" loading="lazy"></div>
+          <div class="card-bottom">Shawarma 1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP PROMO SECTION -->
+  <div class="container my-5">
+    <div class="hero2 row align-items-center">
+
+      <div class="col-12 col-md-6 mb-4 mb-lg-0" id="person-image">
+        <img src="images/friends-laughing-using-mobiles 2.png" alt="Friends laughing using mobiles" loading="lazy">
+      </div>
+
+      <div class="col-12 col-md-6 pb-4 px-md-5">
+        <h1 class="hero-title2">
+          Order<span>.UK</span>ing is more
+        </h1>
+
+        <div class="highlight-box mt-3">
+          <h3><span>Personalised</span> &amp; Instant</h3>
+        </div>
+
+        <p class="fw-bold mt-3" style="color:black; font-size:16px;">
+          Download the Order.uk app for faster ordering
+        </p>
+
+        <div class="d-flex gap-2 mt-3">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" style="height:45px;" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height:45px;" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PARTNER & RIDER SECTION -->
+  <div class="py-4 bg-white">
+    <div class="container px-3">
+      <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="promo-card">
+            <img src="images/partner.png" alt="Partner Chef" loading="lazy">
+            <div class="top-badge">Earn more with lower fees</div>
+            <div class="card-body-content">
+              <p class="sub-label mb-1">Signup as a business</p>
+              <h2 class="main-title">Partner with us</h2>
+              <a href="#" class="btn-started">Get Started</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="promo-card">
+            <img src="images/rider.png" alt="Rider" loading="lazy">
+            <div class="top-badge">Avail exclusive perks</div>
+            <div class="card-body-content">
+              <p class="sub-label mb-1">Signup as a rider</p>
+              <h2 class="main-title">Ride with us</h2>
+              <a href="#" class="btn-started">Get Started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <div class="container my-5">
+    <div class="faq-section">
+      <div class="d-flex flex-column flex-md-row align-items-center flex-wrap mb-4">
+        <h5 class="fw-bold me-auto mb-3">Know more about us!</h5>
+        <div class="faq-tabs w-100 w-md-auto d-flex flex-wrap">
+          <a href="#" class="active">Frequent Questions</a>
+          <a href="#">Who we are?</a>
+          <a href="#">Partner Program</a>
+          <a href="#">Help &amp; Support</a>
+        </div>
+      </div>
+
+      <div class="faq-box">
+        <div class="row g-4">
+          <div class="col-12 col-md-4 col-lg-3 faq-menu">
+            <button class="active">How does Order.UK work?</button>
+            <button>What payment methods are accepted?</button>
+            <button>Can I track my order in real-time?</button>
+            <button>Are there any special discounts or promotions available?</button>
+            <button>Is Order.UK available in my area?</button>
+          </div>
+          <div class="col-12 col-md-8 col-lg-9">
+            <div class="row g-3">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Place an Order!</div>
+                  <img src="images/order-food 1.png" alt="Place order" loading="lazy">
+                  <div class="step-text">Place order through our website or Mobile app</div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Track Progress</div>
+                  <img src="images/fq food 2.png" alt="Track Progress" loading="lazy">
+                  <div class="step-text">You can track your order status with delivery time</div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="step-card">
+                  <div class="step-title">Get your Order!</div>
+                  <img src="images/fq food 3.png" alt="Receive Order" loading="lazy">
+                  <div class="step-text">Receive your order at a lightning fast speed!</div>
+                </div>
+              </div>
+            </div>
+            <div class="faq-desc">
+              Order.UK simplifies the food ordering process. Browse through our diverse menu, select your favorite
+              dishes, and proceed to checkout. Your delicious meal will be on its way to your doorstep in no time!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER REVIEWS SLIDER -->
+  <div class="rv-section">
+    <div class="rv-header">
+      <h2 class="rv-title">Customer Reviews</h2>
+      <div class="rv-nav-btns">
+        <button class="rv-nav-btn" id="rvPrev" aria-label="Previous review">&#8249;</button>
+        <button class="rv-nav-btn" id="rvNext" aria-label="Next review">&#8250;</button>
+      </div>
+    </div>
+    <div class="rv-grey">
+      <div id="rv-white-strip"></div>
+      <div class="rv-viewport">
+        <div class="rv-cards" id="rvCarousel">
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=11" alt="Reviewer 1">
+                <div><div class="rv-name">Sarah M.</div><div class="rv-location">North London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">12th March, 2024</div></div>
+            </div>
+            <p class="rv-text">Absolutely love Order.UK! The food arrived hot and exactly as described. The tracking feature is amazing — I knew exactly when my pizza would arrive. Will definitely order again!</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=22" alt="Reviewer 2">
+                <div><div class="rv-name">James T.</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">5th April, 2024</div></div>
+            </div>
+            <p class="rv-text">Fastest delivery I've ever experienced! Ordered a burger meal and it was at my door in under 20 minutes. The app is super easy to use and the selection of restaurants is fantastic.</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=33" alt="Reviewer 3">
+                <div><div class="rv-name">Aisha K.</div><div class="rv-location">East London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★☆</div><div class="rv-date">20th April, 2024</div></div>
+            </div>
+            <p class="rv-text">Great service overall! The exclusive deals section saved me a lot of money. Customer support was also very responsive when I had a query. Highly recommended to all food lovers!</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=44" alt="Reviewer 4">
+                <div><div class="rv-name">Daniel R.</div><div class="rv-location">West London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">2nd May, 2024</div></div>
+            </div>
+            <p class="rv-text">The variety of restaurants available is incredible. From sushi to burgers to healthy salads — everything is just a few clicks away. Order.UK has become my go-to for every meal!</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=55" alt="Reviewer 5">
+                <div><div class="rv-name">Emma L.</div><div class="rv-location">Central London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">18th May, 2024</div></div>
+            </div>
+            <p class="rv-text">I've tried many food delivery apps but Order.UK is by far the best. The interface is clean, delivery is fast and the food quality from partner restaurants is always top notch!</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv-rating-bottom">
+        <div class="rv-rating-box">
+          <div class="rv-rating-num">4.8</div>
+          <div class="rv-rating-stars">★★★★★</div>
+          <div class="rv-rating-count">12,560 reviews</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS SECTION -->
+  <section class="stats-section pb-5">
+    <div class="container">
+      <div class="row justify-content-center align-items-center flex-wrap g-4">
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number">546+</span>
+          <span class="stat-label">Restaurants</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number">780,900+</span>
+          <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md-3 stat-item">
+          <span class="stat-number">690+</span>
+          <span class="stat-label">Food Categories</span>
+        </div>
+        <div class="stat-divider d-none d-md-block"></div>
+        <div class="col-6 col-md-2 stat-item">
+          <span class="stat-number">17,467+</span>
+          <span class="stat-label">Orders Delivered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER MAIN -->
+  <div class="footer-main">
+    <div class="container py-5">
+      <div class="row g-4">
+
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="brand-logo">Order<span class="uk-box">uk</span></div>
+          <div class="store-btns">
+            <a href="#" class="store-btn" aria-label="Download on the App Store">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              <div class="btn-label"><span class="small-txt">Download on the</span><span class="big-txt">App Store</span></div>
+            </a>
+            <a href="#" class="store-btn" aria-label="Get it on Google Play">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.28.15.6.19.92.1l12.39-7.17-2.63-2.63-10.68 9.7zm-1.7-20.1C1.17 4 1 4.5 1 5.1v13.8c0 .6.17 1.1.48 1.44l.08.07 7.74-7.74v-.18L1.56 3.59l-.08.07zm16.68 9.47l-2.19-2.19-2.19 2.19 2.19 2.19 2.19-2.19zm-8.07-7.26L.17 1.24C-.15 1.15-.47 1.19-.76 1.35L10.09 12.2l6-6.33z"/></svg>
+              <div class="btn-label"><span class="small-txt">GET IT ON</span><span class="big-txt">Google Play</span></div>
+            </a>
+          </div>
+          <p class="company-text mt-3">Company # 490039-445, Registered with<br>House of companies.</p>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+          <p class="subscribe-title mb-3">Get Exclusive Deals in your Inbox</p>
+          <div class="subscribe-wrap mb-2">
+            <input type="email" placeholder="youremail@gmail.com" aria-label="Email for newsletter">
+            <button>Subscribe</button>
+          </div>
+          <p class="spam-text mb-3">we wont spam, read our <a href="#">email policy</a></p>
+          <div class="d-flex gap-2 mt-1">
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.98a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="TikTok">
+              <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.95v7.4c0 1.91-.48 3.82-1.46 5.45-1.02 1.7-2.62 3-4.52 3.55-1.92.56-4.04.48-5.88-.34-1.87-.83-3.41-2.31-4.22-4.18-.84-1.91-.91-4.13-.19-6.07.69-1.89 2.05-3.47 3.79-4.43 1.71-.94 3.73-1.25 5.62-.89v4.11c-.55-.1-1.12-.13-1.68-.08-.75.05-1.49.33-2.09.8-.62.47-1.07 1.14-1.28 1.88-.22.75-.16 1.56.16 2.27.3.69.83 1.25 1.48 1.58.64.33 1.39.46 2.09.38.7-.08 1.36-.4 1.87-.89.51-.48.86-1.12 1-1.82.13-.67.14-1.37.14-2.05V.02z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Snapchat">
+              <svg viewBox="0 0 24 24"><path d="M12.1 0C8.5 0 6 2.2 6 5.5c0 1 .3 2 1 2.8.5.6 1.4 1 2.3 1.1.2 0 .4.1.6.2.2.1.3.3.4.6 0 .3-.1.6-.3.8-.4.3-1 .5-1.5.5-1.1 0-2.3-.4-3.2-1.1-.3-.2-.7-.4-1.1-.4-.6 0-1.1.3-1.5.8-.4.5-.5 1.2-.3 1.8.3.9 1.1 1.6 2 2.1 1.2.6 2.6.9 3.9 1 .5 0 1 .1 1.5.2.5.1 1 .3 1.4.6.4.3.7.7.9 1.1.2.5.2 1.1.2 1.7 0 .5-.1 1.1-.3 1.6-.2.4-.4.8-.7 1.1-1.3 1.3-3 2.1-4.9 2.1H8c-.8 0-1.5.3-2 1-.5.7-.6 1.6-.4 2.4.2.8.8 1.5 1.6 1.8.9.3 1.8.4 2.8.4h4.1c1 0 1.9-.1 2.8-.4.8-.3 1.4-1 1.6-1.8.2-.8.1-1.7-.4-2.4-.5-.7-1.2-1-2-1h-.9c-1.9 0-3.6-.8-4.9-2.1-.3-.3-.5-.7-.7-1.1-.2-.5-.3-1.1-.3-1.6 0-.6.1-1.2.2-1.7.2-.4.5-.8.9-1.1.4-.3.9-.5 1.4-.6.5-.1 1-.2 1.5-.2 1.3-.1 2.7-.4 3.9-1 .9-.5 1.7-1.2 2-2.1.2-.6.1-1.3-.3-1.8-.4-.5-1-.8-1.5-.8-.4 0-.8.2-1.1.4-.9.7-2.1 1.1-3.2 1.1-.5 0-1.1-.2-1.5-.5-.2-.2-.3-.5-.3-.8.1-.3.2-.5.4-.6.2-.1.4-.2.6-.2.9-.1 1.8-.5 2.3-1.1.7-.8 1-1.8 1-2.8 0-3.3-2.5-5.5-6.1-5.5z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-2">
+          <p class="footer-link-title">Legal Pages</p>
+          <ul class="footer-links">
+            <li><a href="#">Terms and conditions</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Modern Slavery Statement</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4 col-lg-2">
+          <p class="footer-link-title">Important Links</p>
+          <ul class="footer-links">
+            <li><a href="#">Get help</a></li>
+            <li><a href="#">Add your restaurant</a></li>
+            <li><a href="#">Sign up to deliver</a></li>
+            <li><a href="#">Create a business account</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <p class="footer-bottom-text">Order.uk Copyright 2024, All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Pricing</a>
+        <a href="#">Do not sell or share my personal information</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

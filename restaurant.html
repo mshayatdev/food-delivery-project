@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resturent page</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-white" style="font-family: 'Nunito', sans-serif;">
+
+  <header class="sticky-top bg-white" style="z-index: 1050;">
+    <!-- TOPBAR -->
+    <div class="bg-light px-4 py-2 d-flex justify-content-between align-items-center" style="font-size:14px;">
+      <div>
+        ⭐ Get 5% off your first order,
+        <span class="promo fw-semibold">Promo: ORDER5</span>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div>
+          📍 <span id="addressText">Regent Street, A4, A4201, London</span>
+          <span class="location ms-2" id="locationBtn">Change Location</span>
+        </div>
+        <div class="cart-box text-white px-3 py-2 d-flex align-items-center gap-2" id="cartBtn" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" style="cursor:pointer;">
+          🛒 <span id="cartCount">0</span> Items
+          <span>GBP <span id="cartPrice">0.00</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 px-3">
+      <div class="container-fluid">
+        <a class="navbar-brand brand fw-bold fs-3" href="#">Order<span>UK</span></a>
+        <button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#menu">☰</button>
+        <div class="collapse navbar-collapse justify-content-center" id="menu">
+          <ul class="navbar-nav gap-5">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#browse-menu">Browse Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#deals-section">Special Offers</a></li>
+            <li class="nav-item"><a class="nav-link active" href="restaurant.html">Restaurants</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Track Order</a></li>
+          </ul>
+        </div>
+        <button class="login-btn">👤 Login/Signup</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MODAL -->
+  <div class="modal fade" id="locationModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <h5>Change Address</h5>
+        <input type="text" id="newAddress" class="form-control my-3" placeholder="Enter new address">
+        <button class="btn btn-success" id="saveAddressBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART OFFCANVAS -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel" style="width:420px;">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel">🛒 Your Cart</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItemsList" class="flex-grow-1 overflow-auto"></div>
+      <div class="mt-auto pt-3 border-top">
+        <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+          <span>Total</span>
+          <span>GBP <span id="cartTotalPrice">0.00</span></span>
+        </div>
+        <button class="btn w-100 fw-bold py-2" id="openCheckoutBtn"
+          data-bs-dismiss="offcanvas" data-bs-toggle="modal" data-bs-target="#checkoutModal"
+          style="background:#FC8A06;color:#fff;border-radius:8px;font-size:16px;">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content p-3">
+        <div class="modal-header border-0">
+          <h4 class="modal-title fw-bold">🧾 Checkout</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="checkoutForm">
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Full Name</label>
+                <input type="text" class="form-control" id="coName" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Phone</label>
+                <input type="tel" class="form-control" id="coPhone" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control" id="coEmail" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold">Delivery Address</label>
+                <textarea class="form-control" rows="2" id="coAddress" required></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">City</label>
+                <input type="text" class="form-control" id="coCity" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Zip Code</label>
+                <input type="text" class="form-control" id="coZip" required>
+              </div>
+            </div>
+            <h5 class="fw-bold mb-2">Payment Method</h5>
+            <div class="mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="payCod" value="cod" checked>
+                <label class="form-check-label" for="payCod">Cash on Delivery</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="payCard" value="card">
+                <label class="form-check-label" for="payCard">Credit Card</label>
+              </div>
+            </div>
+            <div class="row g-3 mb-3 d-none" id="ccInfoBox">
+              <div class="col-12">
+                <label class="form-label fw-bold">Card Number</label>
+                <input type="text" class="form-control" id="ccNumber">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Expiry (MM/YY)</label>
+                <input type="text" class="form-control" id="ccExpiry">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">CVV</label>
+                <input type="text" class="form-control" id="ccCvv">
+              </div>
+            </div>
+            <h5 class="fw-bold mb-2">Order Summary</h5>
+            <div class="p-3 mb-3 rounded" style="background:#f8f9fa;">
+              <div id="checkoutSummaryItems"></div>
+              <hr>
+              <div class="d-flex justify-content-between fw-bold fs-5">
+                <span>Total</span>
+                <span>GBP <span id="checkoutSummaryTotal">0.00</span></span>
+              </div>
+            </div>
+            <button type="submit" class="btn w-100 fw-bold py-3" style="background:#FC8A06;color:#fff;border-radius:8px;font-size:16px;">Place Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO BANNER -->
+  <div class="hero-banner container">
+    <div class="hero-content">
+      <div class="hero-tagline">I'm lovin' it!</div>
+      <div class="hero-title">McDonald's East London</div>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 21V9"/>
+          </svg>
+          Minimum Order: 12 GBP
+        </div>
+        <div class="hero-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+          Delivery in 20–25 Minutes
+        </div>
+      </div>
+    </div>
+
+    <div class="open-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+      </svg>
+      Open until 3:00 AM
+    </div>
+
+    <div class="hero-rating-box d-none d-md-block">
+      <div class="hero-rating-num">3.4</div>
+      <div class="hero-stars">★★★☆☆</div>
+      <div class="hero-rating-cnt">1,360 reviews</div>
+    </div>
+
+    <img class="hero-img d-none d-md-block" src="images/Rectangle 44.png" alt="food">
+  </div>
+
+  <!-- OFFERS BAR -->
+  <div class="container border-bottom py-4 d-flex align-items-center justify-content-between gap-3 flex-wrap">
+    <h6 class="fw-bold mb-0" style="font-size:16px; color:#1a1a1a;">All Offers from McDonald's East London</h6>
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="menuSearch" class="search-input" placeholder="Search from menu..." />
+      <button class="clear-btn" id="clearBtn" title="Clear">&#x2715;</button>
+    </div>
+  </div>
+
+  <!-- MENU NAVBAR -->
+  <nav class="menu-navbar">
+    <div class="nav-scroll" id="mainNav">
+      <a class="nav-pill offers-pill active" href="#offers"      data-section="offers">Offers</a>
+      <a class="nav-pill"                   href="#burgers"     data-section="burgers">Burgers</a>
+      <a class="nav-pill"                   href="#fries"       data-section="fries">Fries</a>
+      <a class="nav-pill"                   href="#salads"      data-section="salads">Salads</a>
+      <a class="nav-pill"                   href="#colddrinks"  data-section="colddrinks">Cold Drinks</a>
+      <a class="nav-pill"                   href="#hotdrinks"   data-section="hotdrinks">Hot Drinks</a>
+      <a class="nav-pill"                   href="#happymeal"   data-section="happymeal">Happy Meal</a>
+      <a class="nav-pill"                   href="#desserts"    data-section="desserts">Desserts</a>
+      <a class="nav-pill"                   href="#mcaffiliate" data-section="mcaffiliate">Mc affiliates</a>
+      <a class="nav-pill"                   href="#snacks"      data-section="snacks">Snacks</a>
+      <a class="nav-pill"                   href="#staff"       data-section="staff">Staff</a>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="container-lg py-5">
+
+    <!-- OFFER BANNERS -->
+    <section id="offers">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/first order.png" alt="First Order Discount" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald's East London</div>
+              <div class="offer-label">First Order Discount</div>
+            </div>
+            <div class="offer-new-badge">-20%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/vegan discount.png" alt="Vegan Discount" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald's East London</div>
+              <div class="offer-label">Vegan Discount</div>
+            </div>
+            <div class="offer-new-badge">-20%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="offer-banner">
+            <img src="images/free icecreamm.png" alt="Free Ice Cream" />
+            <div class="offer-overlay">
+              <div class="offer-top-text">McDonald's East London</div>
+              <div class="offer-label">Free Ice Cream Offer</div>
+            </div>
+            <div class="offer-new-badge">-100%</div>
+            <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BURGERS -->
+    <section id="burgers">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Burgers</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="royal cheese burger extra fries">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">Royal Cheese Burger with extra Fries</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 mcchicken bigmac">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 cheeseburger">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 wrap combo">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 nuggets set">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classics for 3 quarter pounder">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46.png" alt="Burger" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRIES -->
+    <section id="fries">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Fries</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="small cheese fries">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">Small Cheese Fries</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries large combo">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries medium portion">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="combo fries seasoned dipping">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries xl cheese bacon">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic fries sweet potato">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="images/Rectangle 46 fries.png" alt="Fries" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLD DRINKS -->
+    <section id="colddrinks">
+      <hr class="section-divider" />
+      <h2 class="section-heading">Cold Drinks</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink cola large">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&q=80" alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="menu-card" data-name="classic cold drink sprite fizzy">
+            <div class="menu-card-body">
+              <div>
+                <div class="menu-card-title">The classics for 3</div>
+                <div class="menu-card-desc">1 McChicken™, 1 Big Mac™, 1 Royal Cheeseburger, 3 medium sized French Fries, 3 cold drinks</div>
+              </div>
+              <div class="menu-card-price">GBP 23.10</div>
+            </div>
+            <div class="menu-card-img-wrap">
+              <div class="globe"><img src="images/Rectangle 47.png" alt=""></div>
+              <img class="menu-card-img" src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=300&q=80" alt="Cold Drink" />
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- INFO SECTION -->
+  <div class="container-lg">
+    <div class="info-section">
+      <div class="info-panel">
+        <div class="panel-heading">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-1"/>
+            <circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/>
+          </svg>
+          Delivery information
+        </div>
+        <div class="schedule-row"><strong>Monday:</strong> 12:00 AM–3:00 AM, 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Tuesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Wednesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Thursday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Friday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Saturday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Sunday:</strong> 8:00 AM–12:00 AM</div>
+        <div class="schedule-row mt-3"><strong>Estimated time until delivery:</strong> 20 min</div>
+      </div>
+      <div class="info-panel">
+        <div class="panel-heading">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M7 8h.01M7 12h.01M7 16h.01"/><path d="M11 8h6M11 12h6M11 16h4"/>
+          </svg>
+          Contact information
+        </div>
+        <p class="contact-desc">If you have allergies or other dietary restrictions, please contact the restaurant. The restaurant will provide food-specific information upon request.</p>
+        <div class="contact-label">Phone number</div>
+        <div class="contact-value">+934443–43</div>
+        <div class="contact-label">Website</div>
+        <div class="contact-value"><a href="http://mcdonalds.uk/" target="_blank" style="color:#333; text-decoration:none;">http://mcdonalds.uk/</a></div>
+      </div>
+      <div class="info-panel dark">
+        <div class="panel-heading">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+          Operational Times
+        </div>
+        <div class="schedule-row"><strong>Monday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Tuesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Wednesday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Thursday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Friday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Saturday:</strong> 8:00 AM–3:00 AM</div>
+        <div class="schedule-row"><strong>Sunday:</strong> 8:00 AM–3:00 AM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP SECTION -->
+  <div class="container-lg py-5">
+    <div class="map-section">
+      <div class="map-overlay">
+        <div class="overlay-title">McDonald's</div>
+        <div class="overlay-subtitle">South London</div>
+        <div class="overlay-address">Tooley St, London Bridge, London SE1 2TF,<br>United Kingdom</div>
+        <div class="overlay-label">Phone number</div>
+        <a href="tel:+93444343" class="overlay-value">+934443–43</a>
+        <div class="overlay-label">Website</div>
+        <a href="http://mcdonalds.uk/" target="_blank" class="overlay-value">http://mcdonalds.uk/</a>
+      </div>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.6!2d-0.0872!3d51.5045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ab10955e37%3A0x3ffce1f7b8e98f4b!2sMcDonald's%20London%20Bridge!5e0!3m2!1sen!2suk!4v1700000000000"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="rv-section">
+    <div class="rv-header">
+      <h2 class="rv-title">Customer Reviews</h2>
+      <div class="rv-nav-btns">
+        <button class="rv-nav-btn" id="rvPrev">‹</button>
+        <button class="rv-nav-btn" id="rvNext">›</button>
+      </div>
+    </div>
+    <div class="rv-grey">
+      <div id="rv-white-strip"></div>
+      <div class="rv-viewport">
+        <div class="rv-cards" id="rvCarousel">
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=11"/>
+                <div><div class="rv-name">St Glx</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">24th September, 2023</div></div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=22"/>
+                <div><div class="rv-name">St Glx</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">24th September, 2023</div></div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=33"/>
+                <div><div class="rv-name">St Glx</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">24th September, 2023</div></div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=44"/>
+                <div><div class="rv-name">St Glx</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">24th September, 2023</div></div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-card-top">
+              <div class="rv-user">
+                <img class="rv-avatar" src="https://i.pravatar.cc/44?img=55"/>
+                <div><div class="rv-name">St Glx</div><div class="rv-location">South London</div></div>
+              </div>
+              <div class="rv-meta"><div class="rv-stars">★★★★★</div><div class="rv-date">24th September, 2023</div></div>
+            </div>
+            <p class="rv-text">The positive aspect was undoubtedly the efficiency of the service...</p>
+          </div>
+        </div>
+      </div>
+      <div class="rv-rating-bottom">
+        <div class="rv-rating-box">
+          <div class="rv-rating-num">3.4</div>
+          <div class="rv-rating-stars">★★★★☆</div>
+          <div class="rv-rating-count">1,360 reviews</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIMILAR RESTAURANTS -->
+  <div class="container py-3">
+    <h2 class="fw-bold fs-4 mb-4">Similer Restaurants</h2>
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (1).png"></div>
+          <div class="card-bottom">McDonald's London</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/papa jones.png"></div>
+          <div class="card-bottom">Papa Johns</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/macdonald.png"></div>
+          <div class="card-bottom">KFC West London</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (2).png"></div>
+          <div class="card-bottom">Texas Chicken</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (3).png"></div>
+          <div class="card-bottom">Burger King</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="restaurant-card shadow-sm">
+          <div class="card-top"><img src="images/Rectangle 13 (4).png"></div>
+          <div class="card-bottom">Shawarma 1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER MAIN -->
+  <div class="footer-main">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="brand-logo">Order<span class="uk-box">uk</span></div>
+          <div class="store-btns">
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              <div class="btn-label"><span class="small-txt">Download on the</span><span class="big-txt">App Store</span></div>
+            </a>
+            <a href="#" class="store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.28.15.6.19.92.1l12.39-7.17-2.63-2.63-10.68 9.7zm-1.7-20.1C1.17 4 1 4.5 1 5.1v13.8c0 .6.17 1.1.48 1.44l.08.07 7.74-7.74v-.18L1.56 3.59l-.08.07zm16.68 9.47l-2.19-2.19-2.19 2.19 2.19 2.19 2.19-2.19zm-8.07-7.26L.17 1.24C-.15 1.15-.47 1.19-.76 1.35L10.09 12.2l6-6.33z"/></svg>
+              <div class="btn-label"><span class="small-txt">GET IT ON</span><span class="big-txt">Google Play</span></div>
+            </a>
+          </div>
+          <p class="company-text mt-3">Company # 490039-445, Registered with<br>House of companies.</p>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <p class="subscribe-title mb-3">Get Exclusive Deals in your Inbox</p>
+          <div class="subscribe-wrap mb-2">
+            <input type="email" placeholder="youremail@gmail.com">
+            <button>Subscribe</button>
+          </div>
+          <p class="spam-text mb-3">we wont spam, read our <a href="#">email policy</a></p>
+          <div class="d-flex gap-2 mt-1">
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24" fill="white" width="17" height="17"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.988l4.27 5.647 4.736-5.647zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <p class="footer-link-title mb-3">Legal Pages</p>
+          <ul class="footer-links">
+            <li><a href="#">Terms and conditions</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Cookies</a></li>
+            <li><a href="#">Modern Slavery Statement</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <p class="footer-link-title mb-3">Important Links</p>
+          <ul class="footer-links">
+            <li><a href="#">Get help</a></li>
+            <li><a href="#">Add your restaurant</a></li>
+            <li><a href="#">Sign up to deliver</a></li>
+            <li><a href="#">Create a business account</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER BOTTOM -->
+  <div class="footer-bottom">
+    <div class="container px-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+        <p class="footer-bottom-text">Order.uk Copyright 2026, All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Pricing</a>
+          <a href="#">Do not sell or share my personal information</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
